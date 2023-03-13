@@ -58,15 +58,12 @@ if ($giftId)
 	}
 
 } else {
-	$price = $basket->getPrice();
-	$quantity = $basket->getQuantityList();
-	if ($price == 0 && $quantity > 0)
-	{
-		$basketItems = $basket->getBasketItems();
-		foreach ($basket as $basketItem) {
+	$basketItems = $basket->getBasketItems();
+	foreach ($basket as $basketItem) {
+		if ($basketItem->getFinalPrice() == 0)
+		{
 			$basketItem->delete();
 			$basket->save();
 		}
-
 	}
 }
